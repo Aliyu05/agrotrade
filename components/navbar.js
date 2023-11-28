@@ -10,7 +10,7 @@ const montserrat_500 = Montserrat({
 export default function NavBar() {
   return (
     <div>
-      <nav className="h-[58px] flex items-center px-4 md:px-20">
+      <nav className="flex items-center px-4 md:px-20 py-2">
         {/* Navbar */}
         <div className="w-full flex flex-row justify-between items-center">
           {/* Logo */}
@@ -43,6 +43,9 @@ export default function NavBar() {
 
           {/* Mobile view: Show "Home" and "Products" links on the left */}
           <div className="md:hidden flex flex-row items-center gap-4">
+
+              <Image width={38} height={38} src="/AGROTRADE.png" alt="logo" />
+
             <Link
               href="/"
               className={`${montserrat_500.className} text-green-700 hover:text-yellow-700`}
@@ -66,14 +69,12 @@ export default function NavBar() {
         </div>
       </nav>
 
-      {/* Separator */}
+      {/* Separator with top padding */}
       <div className="grid grid-cols-3">
-        <div className="h-[4px] bg-green-500"></div>
-        <div className="h-[4px] bg-yellow-500"></div>
-        <div className="h-[4px] bg-red-500"></div>
+        <div className="h-1 bg-green-500"></div>
+        <div className="h-1 bg-yellow-500"></div>
+        <div className="h-1 bg-red-500"></div>
       </div>
     </div>
   );
 }
-
-
