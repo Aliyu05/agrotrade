@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 
 
 
+
 export default function Signup () {
     const [tab,setTab] = useState('buyer')
     return (
