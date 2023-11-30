@@ -43,6 +43,9 @@ export default function NavBar() {
 
           {/* Mobile view: Show "Home" and "Products" links on the left */}
           <div className="md:hidden flex flex-row items-center gap-4">
+
+            <Image width={38} height={38} src="/AGROTRADE.png" alt="logo" />
+
             <Link
               href="/"
               className={`${montserrat_500.className} text-green-700 hover:text-yellow-700`}
@@ -63,6 +66,7 @@ export default function NavBar() {
           >
             Sign up
           </Link>
+          
         </div>
       </nav>
 
