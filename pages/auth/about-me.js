@@ -13,7 +13,7 @@ export default function AboutMe() {
       <div className="flex flex-col sm:flex-row items-center sm:items-start">
         <div className="flex-shrink-0 sm:mr-8">
           <img
-            src="/ali.png"
+            src=""
             alt="Your Name"
             className="w-32 h-32 sm:w-48 sm:h-48 object-cover rounded-full shadow-md"
           />
