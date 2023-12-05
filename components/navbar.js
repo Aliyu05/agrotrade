@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Montserrat } from "next/font/google";
+import { useSession } from "next-auth/react";
+
 
 const montserrat_500 = Montserrat({
     subsets: ['latin'],
@@ -8,9 +10,13 @@ const montserrat_500 = Montserrat({
 })
 
 export default function NavBar () {
+    const{data:session} = useSession();
+    const accountType = 'seller'
+    console.log(session);
+
     return (
         <div>
-            <nav className="h-[58px] flex items-center px-4 sm:px-20 justify-between">
+            <nav className={`h-[58px] flex items-center px-4 sm:px-20 justify-between ${accountType == 'seller' ? 'bg-green-100' : 'bg-yellow-100'}`}>
                 <div className="w-full flex flex-row justify-between items-center">
                     <ul className="flex flex-row items-center gap-12">
                         <li>
@@ -24,7 +30,14 @@ export default function NavBar () {
                         <li className={`${montserrat_500.className} text-green-700 hover:text-yellow-700`}><Link href='/products'>Products</Link></li>
                     </ul>
 
-                    <Link href='/auth/signup'>Sign up</Link>
+                  {session
+                 ?<Link href='/profile'>                  
+                  <Image width={48}
+                   height={48} src={session.user.image} 
+                   alt="profile image" 
+                   className="rounded-full cursor-pointer"/>
+                   </Link>
+                  :<Link href='/auth/signup'>Sign up</Link>}
                 </div>
             </nav>
 

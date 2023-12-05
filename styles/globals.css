@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 .bg-home {
-  background: url('/home.jpg');
   background: url('/modern-farm.jpg');
   background-position: center;
   background-repeat: no-repeat;
