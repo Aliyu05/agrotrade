@@ -63,20 +63,14 @@ export async function getServerSideProps (context) {
         else if (session.user_data?.accountType == 'buyer') {
             return {redirect:{destination:'/buyer',permanent:false}}
         } 
-  
-    
-    
-        return {
-            props:{
-                session:JSON.parse(JSON.stringify(session))
-            }
-        }
-    }
+        else {
+            return {redirect:{destination:'/auth/continue-registration',permanent:false}}
+        } 
+    } 
     
     return {
         props:{
             session
         }
     }
-    
-    }
+}
