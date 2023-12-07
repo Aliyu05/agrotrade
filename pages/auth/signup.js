@@ -63,7 +63,7 @@ export async function getServerSideProps (context) {
         else if (session.user_data?.accountType == 'buyer') {
             return {redirect:{destination:'/buyer',permanent:false}}
         } 
- 
+        
     
     return {
         props:{
