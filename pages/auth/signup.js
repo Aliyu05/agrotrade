@@ -1,26 +1,20 @@
-import { useState,useContext } from "react";
+import { useContext } from "react";
 import { AppContext } from "@/config/globals";
 import Head from "next/head";
 import Image from "next/image";
-import { TextField } from "@mui/material";
 import { FcGoogle } from 'react-icons/fc';
 import { FaApple } from 'react-icons/fa';
 import { useFormik } from "formik";
 import { signIn } from 'next-auth/react';
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../api/auth/[...nextauth]";
 
 export default function Signup () {
-    const [tab,setTab] = useState('buyer');
-    const [accountType,setAccountType]  =  useContext(AppContext);
-    const {data:session} = useSession();
-    console.log(session);
-    
-   
+    const {accountType,setAccountType} = useContext(AppContext);
 
-    const {handleBlur,handleChange, handleSubmit,touched,errors} = useFormik({
-        initialValues: {},
+    const {handleBlur,handleChange,handleSubmit,touched,errors} = useFormik({
+        initialValues:{},
         onSubmit: () => {},
-        validationSchema:null,
     });
 
     return (
@@ -38,36 +32,11 @@ export default function Signup () {
                 src='/farm-trade.jpg' alt="farm trade"/>
 
                 <div className="flex flex-col gap-5 md:gap-3">
-                    <ul className="grid grid-cols-2">
-                        <li 
-                        className={`text-center font-bold pb-3 cursor-pointer ${tab == 'farmer' ? styles.tabColor : null}`}
-                        onClick={() => setTab('farmer')}>Farmer</li>
-                        <li 
-                        className={`text-center font-bold pb-3 cursor-pointer ${tab == 'buyer' ? styles.tabColor : null}`}
-                        onClick={() => setTab('buyer')}>Buyer</li>
-                    </ul>
-
-                    <div className="flex flex-col gap-2">
-                        <h2 className="text-2xl">{`Register a ${tab} account`}</h2>
-                        <p className="text-xs text-green-600">{`Fill the form below to create a ${tab}'s account`}</p>
-                    </div>
-
-                    <form>
-                        <div className="mb-2">
-                            <TextField className="w-full" type="email" variant="outlined" label="email"/>
-                        </div>
-                        <button className="h-[48px] w-full flex justify-center items-center bg-green-700 text-white text-xl rounded-md">Register</button>
-                    </form>
-
-                    {/* OR seperator */}
-                    <div className="separator"> <span className='text-gray-400 my-3'>OR</span> </div>
-
-                    {/* social signup */}
                     <div className="flex flex-col gap-3">
                         <button 
-                          onClick={() => signIn('google')}
-                          className="h-[48px] flex justify-center items-center border border-slate-400 rounded-md text-slate-900">
-                          <FcGoogle className="text-3xl mr-2"/> Sign up with Google
+                        onClick={() => signIn('google')}
+                        className="h-[48px] flex justify-center items-center border border-slate-400 rounded-md text-slate-900">
+                            <FcGoogle className="text-3xl mr-2"/> Sign up with Google
                         </button>
                         <button 
                         className="h-[48px] flex justify-center items-center border border-slate-400 rounded-md text-slate-900">
@@ -83,4 +52,30 @@ export default function Signup () {
 
 const styles = {
     tabColor:'border-b-4 border-green-600'
+}
+
+export async function getServerSideProps (context) {
+    const session = await getServerSession(context.req,context.res,authOptions);
+    if (session) {
+        if (session.user_data?.accountType == 'seller') {
+            return {redirect:{destination:'/seller',permanent:false}}
+        } 
+        else if (session.user_data?.accountType == 'buyer') {
+            return {redirect:{destination:'/buyer',permanent:false}}
+        } 
+ 
+    
+    return {
+        props:{
+            session:JSON.parse(JSON.stringify(session))
+        }
+    }
+}
+
+return {
+    props:{
+        session
+    }
+}
+
 }
