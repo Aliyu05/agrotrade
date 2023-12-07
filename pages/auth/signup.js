@@ -65,11 +65,18 @@ export async function getServerSideProps (context) {
         } 
   
     
-    return {
-        props:{
-            session:JSON.parse(JSON.stringify(session))
+    
+        return {
+            props:{
+                session:JSON.parse(JSON.stringify(session))
+            }
         }
     }
-}
-
-}
+    
+    return {
+        props:{
+            session
+        }
+    }
+    
+    }
