@@ -16,11 +16,13 @@ export const authOptions = {
         credential: cert({
           projectId: process.env.FIREBASE_PROJECT_ID,
           clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-          privateKey:  process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n") : undefined,
+          privateKey: process.env.FIREBASE_PRIVATE_KEY ? process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n") : undefined,
         })
     }),
     callbacks:{
-        async session({session,user}) {  
+        async session({session,user}) {
+            session.uid = user.id;
+            
             const docRef = doc(db,'users',user.id);
             const docSnap = await getDoc(docRef);
 
