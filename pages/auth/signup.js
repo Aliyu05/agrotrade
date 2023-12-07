@@ -84,3 +84,29 @@ export default function Signup () {
 const styles = {
     tabColor:'border-b-4 border-green-600'
 }
+
+export async function getServerSideProps (context) {
+    const session = await getServerSession(context.req,context.res,authOptions);
+    if (session) {
+        if (session.user_data?.accountType == 'seller') {
+            return {redirect:{destination:'/seller',permanent:false}}
+        } 
+        else if (session.user_data?.accountType == 'buyer') {
+            return {redirect:{destination:'/buyer',permanent:false}}
+        } 
+ 
+    
+    return {
+        props:{
+            session:JSON.parse(JSON.stringify(session))
+        }
+    }
+}
+
+return {
+    props:{
+        session
+    }
+}
+
+}
