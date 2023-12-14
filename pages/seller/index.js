@@ -1,5 +1,8 @@
+import Head from "next/head";
+import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
+import { SellerSideTabs } from "@/components/sellerSideTab";
 
 export default function SellerDasboard() {
     return (
@@ -8,8 +11,14 @@ export default function SellerDasboard() {
             <link rel="icon" href="/AGROTRADE.png" />
             <title>Seller Dashboard | AgroTrade</title>
         </Head>
-        <main className="h-screen lg:h-auto flex justify-center items-center py-20 px-3 md:px-0">
-            <h1>Seller Dashboard</h1>
+        <main className="h-auto lg:h-screen py-12 px-3 md:px-16">
+            <section className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <article className="col-span-3 border border-gray-300 rounded-md p-3">
+                    <h3>Recent purchases</h3>
+                </article>
+
+                <SellerSideTabs/>
+            </section>
         </main>
         </>
     )
@@ -18,14 +27,8 @@ export default function SellerDasboard() {
 export async function getServerSideProps (context) {
     const session = await getServerSession(context.req,context.res,authOptions);
     if (session) {
-        if (session.user_data?.accountType == 'seller') {
-            return {redirect:{destination:'/seller',permanent:false}}
-        } 
-        else if (session.user_data?.accountType == 'buyer') {
-            return {redirect:{destination:'/buyer',permanent:false}}
-        } 
-        else {
-            return {redirect:{destination:'/auth/continue-registration',permanent:false}}
+        if (session.user_data?.accountType != 'seller') {
+            return {redirect:{destination:'/',permanent:false}}
         } 
     } else {
         return {redirect:{destination:'/auth/signup',permanent:false}}
