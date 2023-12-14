@@ -5,7 +5,7 @@ import Image from "next/image";
 import { FcGoogle } from 'react-icons/fc';
 import { FaApple } from 'react-icons/fa';
 import { useFormik } from "formik";
-import { signIn } from 'next-auth/react';
+import { signIn } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
 
