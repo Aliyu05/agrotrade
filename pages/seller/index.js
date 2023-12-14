@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../api/auth/[...nextauth]";
-import { SellerSideTabs } from "@/components/sellerSideTab";
+import { SellerSideTabs } from "@/components/sellerSideTabs";
 
 export default function SellerDasboard() {
     return (

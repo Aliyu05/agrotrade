@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function SellerSideTabs () {
+export function SellerSideTab () {
     return (
         <aside className="">
             <div className="grid grid-cols-2 gap-3 bg-green-100 border border-green-300 p-3 rounded-md">
